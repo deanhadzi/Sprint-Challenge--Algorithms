@@ -96,8 +96,35 @@ class SortingRobot:
         """
         Sort the robot's list.
         """
-        # Fill this out
-        pass
+        # Create the condition which will allow us to break the outter while loop.
+        self.set_light_on()
+
+        # Start the main while loop.
+        while self.light_is_on() == True:
+
+        # Pick up the item at location 0. None is dropped off at the same location.
+            self.swap_item()
+
+            # Go all the way to the end of the list, swap items as we go.
+            # Once the end of the list is reached we have the smallest item in hand.
+            while self.can_move_right():
+                self.move_right()
+                if self.compare_item() == 1:
+                    self.swap_item()
+
+            # Once we reached the end of the list we start moving back to the left.
+            # When we reach the None item, we drop off the smallest item into its slot.
+            while self.can_move_left() == True and self.compare_item() != None:
+                self.move_left()
+
+            self.swap_item()
+
+            # Rinse and repeat with the next index, until we reach last index.
+            if self.can_move_right() == True:
+                self.move_right()
+            # Break the loop at the end of the list.
+            else:
+                self.set_light_off()
 
 
 if __name__ == "__main__":
